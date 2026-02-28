@@ -91,7 +91,7 @@ class MainTool:
                     break
                 
                 #hoàn thành tổng NV -> dừng
-                if self._total_job == self.settings.total_s:
+                if self._success_job == self.settings.total_s:
                     Utils.log(f"Đã hoàn thành {self.settings.total_s} nhiệm vụ", "Thành công")
                     self.stop()
                     break
@@ -141,7 +141,7 @@ class MainTool:
             isSuccess = True
             self._acc_job_count = 0
             Utils.log(f"Cấu hình thành công", "Thành công")
-            
+
     def _should_change_acc(self) -> bool:
         return self._acc_job_count >= self.settings.change_acc_s
 
