@@ -88,11 +88,13 @@ class MainTool:
                 if self._total_job > 20 and (self._fail_job / self._total_job) > 0.7:
                     Utils.log(f"Lỗi quá nhiều ({self._fail_job / self._total_job * 100}%)", "Lỗi")
                     self.stop()
+                    break
                 
                 #hoàn thành tổng NV -> dừng
                 if self._total_job == self.settings.total_s:
                     Utils.log(f"Đã hoàn thành {self.settings.total_s} nhiệm vụ", "Thành công")
                     self.stop()
+                    break
 
                 self._total_job += 1
                 self._acc_job_count += 1
@@ -139,6 +141,7 @@ class MainTool:
             isSuccess = True
             self._acc_job_count = 0
             Utils.log(f"Cấu hình thành công", "Thành công")
+            
     def _should_change_acc(self) -> bool:
         return self._acc_job_count >= self.settings.change_acc_s
 

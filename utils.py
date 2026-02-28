@@ -1,4 +1,4 @@
-import time
+import time, os, json
 import re
 from rich.console import Console
 from rich.panel import Panel
@@ -147,8 +147,6 @@ class Utils:
         """
         Đọc cấu hình từ file JSON
         """
-        import json
-        import os
         if not os.path.exists(file_path):
             # Tạo file mẫu nếu chưa có
             default_config = {
@@ -162,7 +160,7 @@ class Utils:
                 },
                 "cookies": []
             }
-            Utils.save_config(file_path, default_config)
+            Utils.save_config(default_config, file_path)
             return default_config
         
         try:
@@ -177,13 +175,18 @@ class Utils:
         """
         Lưu cấu hình vào file JSON
         """
-        import json
         try:
+            directory = os.path.dirname(file_path)
+            
+            if directory and not os.path.exists(directory):
+                os.makedirs(directory, exist_ok=True)
+                
             with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
+            
             return True
         except Exception as e:
-            Utils.log(f"Lỗi lưu file config: {e}", "ERROR")
+            Utils.log(f"Lỗi lưu file config: {e}", "ERROR") 
             return False
 
     @staticmethod
