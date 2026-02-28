@@ -61,9 +61,10 @@ class MainTool:
             stop = Utils.loading("Đang lấy nhiệm vụ...")
             jobs_response = self.platform.get_job(random_index_job)
             stop()
-            if not jobs_response.success:
+            
+            if not jobs_response.data or len(jobs_response.data) == 0:
                 is_attempt_get_job += 1
-                if(is_attempt_get_job > 3):
+                if(is_attempt_get_job > 2):
                     Utils.log(f"Lấy nhiệm vụ thất bại: {jobs_response.error}", "Lỗi")
                     if jobs_response.countdown:
                         Utils.delay(jobs_response.countdown)
